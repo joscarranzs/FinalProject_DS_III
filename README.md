@@ -58,6 +58,42 @@ El objetivo es detectar parejas o conexiones compatibles entre dos nodos con int
 
 ---
 
+## Cómo instalar Git
+
+### Windows
+1. Descarga el instalador desde https://git-scm.com/download/win.
+2. Ejecuta el instalador y acepta las opciones recomendadas (Git Bash, ubicación de PATH, configuración de fin de línea etc.).
+3. Cierra y abre una nueva terminal (Git Bash o PowerShell).
+
+### Linux
+1. En distribuciones basadas en Debian/Ubuntu:
+   - `sudo apt update`
+   - `sudo apt install git`
+2. En Fedora/CentOS:
+   - `sudo dnf install git`
+3. En Arch Linux:
+   - `sudo pacman -S git`
+
+### macOS
+1. Usando Homebrew:
+   - `brew install git`
+2. O con Xcode Command Line Tools:
+   - `xcode-select --install`
+
+## Comandos básicos de Git
+
+1. `git config --global user.name "Tu Nombre"`
+2. `git config --global user.email "tu@correo.com"`
+3. `git clone <url>` - clonar un repositorio.
+4. `git status` - revisar el estado del repositorio.
+5. `git add <archivo>` - stage para commit.
+6. `git commit -m "mensaje"` - crear un commit.
+7. `git pull origin dev` - traer cambios de la rama dev.
+8. `git push origin <tu-rama>` - subir cambios al remoto.
+9. `git checkout <rama>` - cambiar de rama.
+10. `git checkout -b <rama>` - crear y cambiar a nueva rama.
+11. `git branch` - listar ramas locales.
+
 ## Conectarse al repositorio y comenzar a colaborar
 
 1. Clonar el repo (desde la URL del proyecto):
