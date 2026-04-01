@@ -1,0 +1,13 @@
+# Ignorar carpeta de compilación
+target/
+
+# Ignorar archivos de configuración de IDEs
+.settings/
+.project
+.classpath
+.idea/
+*.iml
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
