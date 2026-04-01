@@ -1,186 +1,154 @@
-# FinalProject_DS_II
+# Proyecto final: Algoritmo de afinidad
 
-## Visión general
+## Descripción
 
-Repositorio de una aplicación de afinidad y compatibilidad entre nodos (personas) basada en estructuras de datos:
-- Grafos como estructura principal (representan redes de relaciones y compatibilidades).
-- Árboles como estructura secundaria (simbolizan similitudes e intereses compartidos).
+El proyecto final de la materia Estructura de Datos II es crear una aplicación gráfica que represente visualmente el funcionamiento verdadero de estructuras complejas, como árboles o grafos. Se señaló que el proyecto debe contar con una estructura principal; en nuestro caso, esta es "grafos", mientras que "árboles" es la estructura secundaria.
 
-El objetivo es detectar parejas o conexiones compatibles entre dos nodos con intereses comunes y otras relaciones.
+Como proyecto, hemos optado por crear un algoritmo que ilustre las conexiones entre un grupo de nodos (individuos) mediante grafos; al emplear árboles y una estructura preestablecida, estos representarán los gustos compartidos. Todos los nodos tendrán la misma estructura en sus árboles.
 
----
+El usuario podrá elegir un nodo para comparar con los demás. Este mostrará nodos y su porcentaje de compatibilidad. El nodo seleccionado será marcado en color azul, mientras que los otros nodos tendrán los siguientes colores: rojo (compatibilidad baja: entre 0 y 33%), amarillo (compatibilidad media: entre 34 y 66%) y verde (alta compatibilidad: entre 67 y 100%).
 
-## Estructura modular
+> Nota: Por ahora solo hay una funcionalidad establecida; posteriormente se agregarán más.
 
-1. `src/main/java/com/finalproject/ui`
-   - Módulo UI.
-   - Crea componentes visuales y estructuras de interfaz.
-   - Muestra resultados de afinidad y guía interacción de usuario.
+## Requerimientos
 
-2. `src/main/java/com/finalproject/core`
-   - Módulo central.
-   - Implementa estructuras de datos y algoritmos:
-     - Grafos (nodos, aristas, peso, recorridos, conectividad).
-     - Árboles (similitud, comparación, expansión de intereses).
-   - Funcionalidades de cálculo de compatibilidad, búsqueda y filtrado.
+Para colaborar en este proyecto necesitas instalar y configurar las siguientes herramientas: Git, Java JDK y Visual Studio Code.
 
-3. `src/main/java/com/finalproject/application`
-   - Módulo de aplicación.
-   - Integra UI+core para ejecutar la lógica del sistema.
-   - Orquesta:
-     - carga de perfiles y atributos,
-     - construcción de grafo de relaciones,
-     - generación de árboles de similitud,
-     - búsqueda de pares compatibles,
-     - entrega de resultados a la interfaz.
+### Git
 
----
+- Windows
+  1. Descarga desde https://git-scm.com/download/win
+  2. Ejecuta el instalador y acepta las opciones recomendadas (incluye Git Bash y línea de comandos).
+  3. Verifica en terminal: `git --version`
 
-## Objetivo funcional
+- macOS
+  1. Instala con Homebrew: `brew install git` (si no tienes Homebrew, primero: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`).
+  2. Alternativa: descarga desde https://git-scm.com/download/mac.
+  3. Verifica: `git --version`
 
-- Encontrar afinidades entre nodos según relaciones y similitudes.
-- Grafos: expresan relaciones directas/indirectas y compatibilidad.
-- Árboles: representan intereses comunes y similitud de perfiles.
-- Aplicación estilo matchmaking, con foco en DS y diseño modular.
+- Linux (Ubuntu/Debian)
+  1. `sudo apt update && sudo apt install git -y`
+  2. Verifica: `git --version`
+  3. Para Fedora/CentOS: `sudo dnf install git -y`.
 
----
+### Java (JDK) + PATH
 
-## Estructura del repositorio
+- Windows
+  1. Descarga el JDK (preferible OpenJDK 17/21) desde https://adoptium.net/ o https://www.oracle.com/java/technologies/javase-downloads.html.
+  2. Instala en `C:\Program Files\Java\jdk-<version>`.
+  3. Ajusta variables de entorno:
+     - JAVA_HOME = `C:\Program Files\Java\jdk-<version>`
+     - PATH = `%JAVA_HOME%\bin;` + valor existente.
+  4. Verifica: `java -version` y `javac -version`.
 
-- `pom.xml`: configuración Maven.
-- `src/main/java/com/finalproject`
-  - `App.java`: punto de entrada.
-  - `application/`: capa de integración.
-  - `core/`: lógica y estructuras.
-  - `ui/`: interfaz de usuario.
-- `src/test/java/com/finalproject/AppTest.java`: pruebas.
-- `target/`: artefactos de compilación.
+- macOS
+  1. Homebrew: `brew install openjdk@17` (o 21) y luego `sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk`.
+  2. Agrega a tu shell (`~/.zshrc` o `~/.bash_profile`):
+     - `export JAVA_HOME="$(/usr/libexec/java_home -v 17)"`
+     - `export PATH="$JAVA_HOME/bin:$PATH"`
+  3. Verifica: `java -version` y `javac -version`.
 
----
+- Linux (Ubuntu/Debian)
+  1. `sudo apt update && sudo apt install openjdk-17-jdk -y`.
+  2. Verifica de la ruta: `sudo update-alternatives --config java` y `sudo update-alternatives --config javac`.
+  3. En `~/.bashrc` o `~/.zshrc`:
+     - `export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"`
+     - `export PATH="$JAVA_HOME/bin:$PATH"`
+  4. Ejecuta `source ~/.bashrc` y comprueba: `java -version`, `javac -version`.
 
-## Cómo instalar Git
+### Visual Studio Code
 
-### Windows
-1. Descarga el instalador desde https://git-scm.com/download/win.
-2. Ejecuta el instalador y acepta las opciones recomendadas (Git Bash, ubicación de PATH, configuración de fin de línea etc.).
-3. Cierra y abre una nueva terminal (Git Bash o PowerShell).
+- Windows
+  1. Descarga: https://code.visualstudio.com/download
+  2. Instala y marca "Add to PATH" y "Open with Code".
+  3. Verifica: `code --version`.
 
-### Linux
-1. En distribuciones basadas en Debian/Ubuntu:
-   - `sudo apt update`
-   - `sudo apt install git`
-2. En Fedora/CentOS:
-   - `sudo dnf install git`
-3. En Arch Linux:
-   - `sudo pacman -S git`
+- macOS
+  1. Descarga e instala desde el sitio oficial.
+  2. Abre VS Code y ejecuta el comando `Shell Command: Install 'code' command in PATH`.
+  3. Verifica: `code --version`.
 
-### macOS
-1. Usando Homebrew:
-   - `brew install git`
-2. O con Xcode Command Line Tools:
-   - `xcode-select --install`
+- Linux
+  1. En Ubuntu/Debian: `sudo snap install code --classic` o `sudo apt install ./<archivo>.deb`.
+  2. En Fedora: `sudo rpm -i <archivo>.rpm` o Snap.
+  3. Verifica: `code --version`.
 
-## Comandos básicos de Git
 
-1. `git config --global user.name "Tu Nombre"`
-2. `git config --global user.email "tu@correo.com"`
-3. `git clone <url>` - clonar un repositorio.
-4. `git status` - revisar el estado del repositorio.
-5. `git add <archivo>` - stage para commit.
-6. `git commit -m "mensaje"` - crear un commit.
-7. `git pull origin dev` - traer cambios de la rama dev.
-8. `git push origin <tu-rama>` - subir cambios al remoto.
-9. `git checkout <rama>` - cambiar de rama.
-10. `git checkout -b <rama>` - crear y cambiar a nueva rama.
-11. `git branch` - listar ramas locales.
+> Nota: estas tres herramientas son imprescindibles para comenzar a cooperar en el proyecto.
 
-## Conectarse al repositorio y comenzar a colaborar
 
-1. Clonar el repo (desde la URL del proyecto):
+## Primeros pasos en git
+
+1. Configurar lo básico de Git:
+   - `git config --global user.name "Tu Nombre"`
+   - `git config --global user.email "tu.email@ejemplo.com"`
+   - `git config --global core.editor "code --wait"` (opcional: VS Code como editor).
+   - `git config --global pull.rebase false` (usualmente con flujos de trabajo en equipo viene por defecto).
+
+2. Clonar el repositorio:
    - `git clone https://github.com/joscarranzs/FinalProject_DS_III.git`
-2. Entrar al directorio:
-   - `cd FinalProject_DS_II`
-3. Verificar ramas remotas:
-   - `git branch -a`
-4. Cambiar a la rama de desarrollo:
-   - `git checkout dev`
-5. Mantener dev actualizada:
-   - `git fetch origin`
-   - `git pull origin dev`
+   - `cd FinalProject_DS_III`
 
-## Flujo de trabajo con ramas Git
+3. Ramas base del proyecto:
+   - `main`: rama de producción estable, siempre limpia.
+   - `dev`: rama de desarrollo, donde se integra el trabajo de todas las funcionalidades.
+   - Nota: Todos los colaboradores deben trabajar en `dev`.
 
-Este repositorio utiliza dos ramas principales:
-- `main` (o `master`) para el código de producción estable.
-- `dev` para desarrollo activo.
+4. Cambiar a la rama `dev`:
+   - `git checkout dev` (si no existe local: `git fetch && git checkout -b dev origin/dev`).
 
-Siempre trabaja en `dev`:
-1. Cambiar a dev:
-   - `git checkout dev`
-2. Actualizar los últimos cambios antes de empezar:
-   - `git fetch origin`
-   - `git pull origin dev`
-3. Crear una rama de trabajo desde dev para tu tarea:
-   - `git checkout -b feature/mi-tarea`
+5. Convenciones de ramas de trabajo (recomendadas):
+   - Crear una subrama desde `dev` para cada tarea concreta:
+     * `feature/<descripción-corta>` (nueva funcionalidad)
+     * `bugfix/<descripción-corta>` (corrección)
+     * `hotfix/<descripción-corta>` (emergencias)
+   - Ejemplo: `git checkout -b feature/vista-nodos-dev`.
 
-### Convención de nombres de ramas
-- `feature/<descripción>`: nuevas funcionalidades.
-- `fix/<descripción>`: correcciones de bugs.
-- `hotfix/<descripción>`: corrección urgente en producción.
-- `chore/<descripción>`: tareas menores (configuración, docs, etc.).
+6. Flujo de trabajo sugerido:
+   - Trabaja en tu subrama.
+   - Realiza commits pequeños y claros con mensajes como:
+     * `git commit -m "Feature: Agregar cálculo de compatibilidad"`
+     * `git commit -m "Fix: Corregir orden de visualización de nodos"`
+   - Sube tu subrama al remoto:
+     * `git push -u origin feature/vista-nodos-dev`
 
-Ejemplo típico:
-- `feature/grafo-ponderado`
-- `feature/ui-filtros-busqueda`
+7. Fusionar a `dev` y limpiar ramas:
+   - Crea un Pull Request / Merge Request desde `feature/...` a `dev` en GitHub.
+   - Revisión de código, pruebas y aprobación.
+   - También puedes crear un PR usando GitHub CLI:
+     * `gh pr create --base dev --head feature/vista-nodos-dev --title "Feature: ..." --body "Descripción de la tarea"`
+     * `gh pr merge <número-o-url> --merge` (después de aprobación).
+   - O desde consola con Git y remoto configurado:
+     * `git push -u origin feature/vista-nodos-dev`
+     * Abrir URL: `https://github.com/joscarranzs/FinalProject_DS_III/compare/dev...feature/vista-nodos-dev?expand=1` y completar PR.
+   - Una vez fusionada, elimina la subrama en remoto y local:
+     * `git branch -d feature/vista-nodos-dev`
+     * `git push origin --delete feature/vista-nodos-dev`
+   - Mantener solo `main` y `dev` como ramas principales.
 
-## Pull request (PR) desde línea de comandos
-1. Asegúrate de tener tu rama `feature` actualizada sobre `dev`:
-   - `git checkout feature/mi-tarea`
-   - `git fetch origin`
-   - `git pull origin dev` (rebase o merge según política)
-2. Subir tu rama al remoto:
-   - `git push origin feature/mi-tarea`
-3. Crear PR en GitHub (CLI o web):
-   - `gh pr create --base dev --head feature/mi-tarea --title "Feature: mi tarea" --body "Descripción de los cambios."`
-4. Revisar y fusionar (merge) cuando esté aprobado:
-   - `gh pr merge --merge` (o `--squash` según convención)
-5. Eliminar la rama de feature local y remota después de mergear:
-   - `git branch -d feature/mi-tarea`
-   - `git push origin --delete feature/mi-tarea`
+> Nota: este flujo garantiza estabilidad en main, facilita la revisión y reduce conflictos, y ayuda a que cada colaborador trabaje de forma independiente.
 
-   - Esto se hace para evitar acumular ramas obsoletas, reducir el ruido en el repositorio y dejar claramente solo las ramas activas (como `dev` y `main`).
-   - También reduce el riesgo de crear trabajo en ramas antiguas, facilita la revisión y mantenimiento del historial.
+## Recomendaciones
 
-> Si no usas GitHub CLI, puedes usar la interfaz web tras el paso 2.
+- Estilo de idioma:
+  - El código fuente del proyecto debe estar completamente en inglés (nombres de clases, métodos, variables, paquetes).
+  - Las ramas y subramas deben ser nombradas en inglés, por ejemplo: `feature/user-preference`, `bugfix/color-tier`.
+  - Los mensajes de commit y descripciones de Git deben estar en inglés.
+  - Excepción: los comentarios dentro del código pueden estar en español, siempre usando buenas prácticas de Javadoc y documentación clara.
 
-Esto ayuda a mantener la rama `dev` limpia y a seguir el flujo colaborativo. Tambien ayuda a evitar conflictos y mantiene la base actualizada.
+- Documentación recomendada:
+  - Libro oficial de Git en línea: https://git-scm.com/book/en/v2
+  - Documentación de Java:
+    * https://docs.oracle.com/en/java/
+    * https://docs.oracle.com/javase/8/docs/api/ (o la versión correspondiente al JDK usado en el proyecto)
+  - Uso de un estilo uniforme de Javadoc para los comentarios de todos los elementos públicos.
 
-## Cómo ejecutar
+- Herramientas complementarias sugeridas:
+  - Swing para interfaces gráficas ligeras: https://docs.oracle.com/javase/tutorial/uiswing/
+  - JavaFX para UI más moderna: https://openjfx.io/
 
-1. `mvn clean install`
-2. `mvn exec:java -Dexec.mainClass="com.finalproject.App"`
+- Buenas prácticas generales:
+  - Mantener el código modular y con responsabilidades separadas.
+  - Escribir tests unitarios en `src/test/java` y ejecutarlos con `mvn test`.
+  - Revisar y actualizar este README con cada avance relevante del proyecto.
 
-(Modificar según configuración real si cambia el Main o plugin.)
-
----
-
-## Próximas ampliaciones de la documentación
-
-- Documentación detallada de clases, paquetes y algoritmos.
-- Ejemplo de flujo de datos (caso de uso: búsqueda de pareja compatible).
-- API de métodos y formatos de entrada/salida.
-- Resultados esperados y ejemplos de uso.
-- Guía de pruebas unitarias e integración.
-
----
-
-## Nota importante
-- Toda descripción, nombre de rama, mensaje de commit y comentarios de código deben escribirse en inglés.
-- El código del proyecto debe mantenerse en inglés coherente con la convención de estilo.
-- Evita copiar código generado por inteligencia artificial sin revisar su funcionamiento, seguridad y adecuación al diseño del proyecto.
-
-## Notas
-
-- UI = componentes y visualización.
-- CORE = estructuras y lógica.
-- APPLICATION = integración de ambos.
