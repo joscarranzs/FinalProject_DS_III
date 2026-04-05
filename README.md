@@ -2,11 +2,44 @@
 
 ## Descripción
 
-El proyecto final de la materia Estructura de Datos II es crear una aplicación gráfica que represente visualmente el funcionamiento verdadero de estructuras complejas, como árboles o grafos. Se señaló que el proyecto debe contar con una estructura principal; en nuestro caso, esta es "grafos", mientras que "árboles" es la estructura secundaria.
+El proyecto final de la materia Estructura de Datos II es crear una aplicación gráfica que represente visualmente el funcionamiento verdadero de estructuras complejas, como árboles o grafos. Se señaló que el proyecto debe contar con una estructura principal; en nuestro caso, esta es **"árboles"**, mientras que **"grafos"** es la estructura secundaria o auxiliar.
 
-Como proyecto, hemos optado por crear un algoritmo que ilustre las conexiones entre un grupo de nodos (individuos) mediante grafos; al emplear árboles y una estructura preestablecida, estos representarán los gustos compartidos. Todos los nodos tendrán la misma estructura en sus árboles.
+Como proyecto, hemos optado por crear un algoritmo de afinidad que calcula el porcentaje de compatibilidad entre un nodo principal y un subconjunto de nodos. Los **árboles** son el núcleo del sistema: cada nodo posee un árbol con la misma estructura predefinida, que representa categorías, subcategorías y elementos (gustos o preferencias). La compatibilidad se calcula recorriendo y comparando estos árboles para determinar cuántos elementos coinciden y expresar ese valor como un porcentaje. Una vez calculados todos los porcentajes, los **grafos** los reciben para visualizar las relaciones entre nodos de forma colorida e intuitiva.
 
-El usuario podrá elegir un nodo para comparar con los demás. Este mostrará nodos y su porcentaje de compatibilidad. El nodo seleccionado será marcado en color azul, mientras que los otros nodos tendrán los siguientes colores: rojo (compatibilidad baja: entre 0 y 33%), amarillo (compatibilidad media: entre 34 y 66%) y verde (alta compatibilidad: entre 67 y 100%).
+El usuario podrá elegir un nodo para comparar con los demás. El sistema mostrará todos los nodos y su porcentaje de compatibilidad de la siguiente manera:
+
+| Color  | Rango de compatibilidad | Significado            |
+|--------|-------------------------|------------------------|
+| 🔵 Azul   | —                       | Nodo principal (el que se compara) |
+| 🔴 Rojo   | 0 % – 33 %              | Compatibilidad baja    |
+| 🟡 Amarillo | 34 % – 66 %           | Compatibilidad media   |
+| 🟢 Verde  | 67 % – 100 %            | Compatibilidad alta    |
+
+### Flujo de datos
+
+```
+Árboles de nodos
+      │
+      ▼
+Recorrido y comparación de contenido
+      │
+      ▼
+Cálculo del % de compatibilidad
+      │
+      ▼
+Grafo con nodos coloreados según compatibilidad
+```
+
+1. Cada nodo tiene un árbol asociado con categorías, subcategorías y elementos.
+2. Los árboles del nodo principal y de cada nodo del subconjunto se recorren y comparan para obtener el porcentaje de coincidencias.
+3. Los porcentajes calculados se pasan al grafo, que los visualiza mediante los colores descritos en la tabla anterior.
+
+### Modularidad del proyecto
+
+El diseño del proyecto está dividido en dos capas bien diferenciadas:
+
+- **Capa de cálculo (árboles):** Responsable de almacenar los datos de cada nodo y de ejecutar las comparaciones para generar los valores de compatibilidad. Es la estructura de mayor peso operativo del sistema.
+- **Capa de visualización (grafos):** Responsable de representar las relaciones entre nodos, mostrando de forma gráfica los resultados calculados por los árboles. Recibe los porcentajes y los traduce en colores sobre el grafo.
 
 > Nota: Por ahora solo hay una funcionalidad establecida; posteriormente se agregarán más.
 
