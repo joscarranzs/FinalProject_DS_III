@@ -112,76 +112,323 @@ Para colaborar en este proyecto necesitas instalar y configurar las siguientes h
 
 ## Primeros pasos en git
 
-1. Configurar lo básico de Git:
-   - `git config --global user.name "Tu Nombre"`
-   - `git config --global user.email "tu.email@ejemplo.com"`
-   - `git config --global core.editor "code --wait"` (opcional: VS Code como editor).
-   - `git config --global pull.rebase false` (usualmente con flujos de trabajo en equipo viene por defecto).
+Esta sección explica cómo configurar git, clonar el repositorio, trabajar con ramas, usar convenciones de ramas y comandos útiles.
 
-2. Clonar el repositorio:
-   - `git clone https://github.com/joscarranzs/FinalProject_DS_III.git`
-   - `cd FinalProject_DS_III`
+### 1. Configuraciones globales básicas de Git
 
-3. Ramas base del proyecto:
-   - `main`: rama de producción estable, siempre limpia.
-   - `dev`: rama de desarrollo, donde se integra el trabajo de todas las funcionalidades.
-   - Nota: Todos los colaboradores deben trabajar en `dev`.
+Antes de trabajar con repositorios, configura tu identidad y algunas opciones generales:
 
-4. Cambiar a la rama `dev`:
-   - `git checkout dev` (si no existe local: `git fetch && git checkout -b dev origin/dev`).
+```bash
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"
+git config --global core.editor "code --wait"
+git config --global pull.rebase false
+git config --global --list
+```
 
-5. Convenciones de ramas de trabajo (recomendadas):
-   - Crear una subrama desde `dev` para cada tarea concreta:
-     * `feature/<descripción-corta>` (nueva funcionalidad)
-     * `bugfix/<descripción-corta>` (corrección)
-     * `hotfix/<descripción-corta>` (emergencias)
-   - Ejemplo: `git checkout -b feature/vista-nodos-dev`.
+Estas configuraciones se almacenan en `~/.gitconfig` y se aplican a todos los repositorios de tu usuario.
 
-6. Flujo de trabajo sugerido:
-   - Trabaja en tu subrama.
-   - Realiza commits pequeños y claros con mensajes como:
-     * `git commit -m "Feature: Agregar cálculo de compatibilidad"`
-     * `git commit -m "Fix: Corregir orden de visualización de nodos"`
-   - Sube tu subrama al remoto:
-     * `git push -u origin feature/vista-nodos-dev`
+### 2. Clonar repositorio
 
-7. Fusionar a `dev` y limpiar ramas:
-   - Crea un Pull Request / Merge Request desde `feature/...` a `dev` en GitHub.
-   - Revisión de código, pruebas y aprobación.
-   - También puedes crear un PR usando GitHub CLI:
-     * `gh pr create --base dev --head feature/vista-nodos-dev --title "Feature: ..." --body "Descripción de la tarea"`
-     * `gh pr merge <número-o-url> --merge` (después de aprobación).
-   - O desde consola con Git y remoto configurado:
-     * `git push -u origin feature/vista-nodos-dev`
-     * Abrir URL: `https://github.com/joscarranzs/FinalProject_DS_III/compare/dev...feature/vista-nodos-dev?expand=1` y completar PR.
-   - Una vez fusionada, elimina la subrama en remoto y local:
-     * `git branch -d feature/vista-nodos-dev`
-     * `git push origin --delete feature/vista-nodos-dev`
-   - Mantener solo `main` y `dev` como ramas principales.
+Para trabajar en el proyecto, clona el repositorio remoto y entra en la carpeta del proyecto:
 
-> Nota: este flujo garantiza estabilidad en main, facilita la revisión y reduce conflictos, y ayuda a que cada colaborador trabaje de forma independiente.
+```bash
+git clone https://github.com/joscarranzs/FinalProject_DS_III.git
+cd FinalProject_DS_III
+```
 
-## Recomendaciones
+Después de clonar, el repositorio local estará listo para crear ramas, hacer commits y enviar cambios al remoto.
 
-- Estilo de idioma:
-  - El código fuente del proyecto debe estar completamente en inglés (nombres de clases, métodos, variables, paquetes).
-  - Las ramas y subramas deben ser nombradas en inglés, por ejemplo: `feature/user-preference`, `bugfix/color-tier`.
-  - Los mensajes de commit y descripciones de Git deben estar en inglés.
-  - Excepción: los comentarios dentro del código pueden estar en español, siempre usando buenas prácticas de Javadoc y documentación clara.
+### 3. Visualización de ramas
 
-- Documentación recomendada:
-  - Libro oficial de Git en línea: https://git-scm.com/book/en/v2
-  - Documentación de Java:
-    * https://docs.oracle.com/en/java/
-    * https://docs.oracle.com/javase/8/docs/api/ (o la versión correspondiente al JDK usado en el proyecto)
-  - Uso de un estilo uniforme de Javadoc para los comentarios de todos los elementos públicos.
+Ver las ramas locales del proyecto:
 
-- Herramientas complementarias sugeridas:
-  - Swing para interfaces gráficas ligeras: https://docs.oracle.com/javase/tutorial/uiswing/
-  - JavaFX para UI más moderna: https://openjfx.io/
+```bash
+git branch
+```
 
-- Buenas prácticas generales:
-  - Mantener el código modular y con responsabilidades separadas.
-  - Escribir tests unitarios en `src/test/java` y ejecutarlos con `mvn test`.
-  - Revisar y actualizar este README con cada avance relevante del proyecto.
+Ver todas las ramas locales y remotas:
+
+```bash
+git branch -a
+```
+
+Cambiar de rama:
+
+```bash
+git checkout dev
+```
+
+O, en versiones recientes de Git:
+
+```bash
+git switch dev
+```
+
+En este proyecto hay dos ramas principales:
+
+- `main` — rama de producción.
+- `dev` — rama de desarrollo.
+
+Solo el administrador del proyecto debe trabajar directamente en `main`. El resto del equipo debe crear ramas temporales y fusionar sus cambios en `dev`.
+
+### 4. Convención de ramas
+
+Una convención de ramas es un conjunto de reglas para nombrar ramas de manera consistente. Se usa para que el equipo entienda el propósito de una rama sin leer su contenido.
+
+Ejemplos de tipos de ramas:
+
+- `feature/` — nuevas funcionalidades.
+- `bugfix/` — correcciones de errores.
+- `hotfix/` — arreglos urgentes en producción.
+- `release/` — preparación de una versión.
+- `chore/` — tareas de mantenimiento.
+- `docs/` — cambios en documentación.
+
+Por ejemplo, `feature/user-authentication` indica que se trata de una nueva funcionalidad.
+
+#### Flujo típico con una rama de convención
+
+1. Crear la rama desde `dev`:
+
+```bash
+git checkout dev
+git pull origin dev
+git checkout -b feature/user-authentication
+```
+
+2. Trabajar en la tarea, agregar cambios y hacer commits:
+
+```bash
+git add src/main/java/com/finalproject/...
+git commit -m "Add user authentication feature"
+```
+
+3. Subir la rama temporal al remoto:
+
+```bash
+git push -u origin feature/user-authentication
+```
+
+4. Continuar trabajando y subir cambios:
+
+```bash
+git add .
+git commit -m "Fix login validation"
+git push
+```
+
+5. Fusionar la rama a `dev` en local:
+
+```bash
+git checkout dev
+git pull origin dev
+git merge --no-ff feature/user-authentication -m "Integrating user authentication into dev"
+```
+
+6. Subir `dev` al remoto:
+
+```bash
+git push origin dev
+```
+
+7. Eliminar la rama temporal:
+
+```bash
+git branch -d feature/user-authentication
+git push origin --delete feature/user-authentication
+```
+
+Al finalizar, la rama de convención ya no debe quedar activa.
+
+### 5. Comandos útiles
+
+Aquí están los comandos más usados en Git con ejemplos reales:
+
+1. `git status`
+   - Muestra cambios sin confirmar y la rama actual.
+   - Ejemplo:
+     ```bash
+     git status
+     ```
+2. `git add`
+   - Añade archivos al área de staging.
+   - Ejemplo:
+     ```bash
+     git add src/main/java/com/finalproject/App.java
+     ```
+3. `git commit`
+   - Crea un commit con los cambios añadidos.
+   - Ejemplo:
+     ```bash
+     git commit -m "Implement affinity algorithm core logic"
+     ```
+4. `git push`
+   - Envía commits locales al repositorio remoto.
+   - Ejemplo:
+     ```bash
+     git push origin dev
+     ```
+5. `git pull`
+   - Descarga cambios remotos y los fusiona en la rama actual.
+   - Ejemplo:
+     ```bash
+     git pull origin dev
+     ```
+6. `git clone`
+   - Clona un repositorio remoto.
+   - Ejemplo:
+     ```bash
+     git clone https://github.com/joscarranzs/FinalProject_DS_III.git
+     ```
+7. `git branch`
+   - Lista ramas locales.
+   - Ejemplo:
+     ```bash
+     git branch
+     ```
+8. `git branch -a`
+   - Lista ramas locales y remotas.
+   - Ejemplo:
+     ```bash
+     git branch -a
+     ```
+9. `git checkout`
+   - Cambia de rama o crea una nueva rama desde otra.
+   - Ejemplo:
+     ```bash
+     git checkout -b bugfix/fix-null-pointer dev
+     ```
+10. `git switch`
+    - Cambia de rama de manera más moderna.
+    - Ejemplo:
+      ```bash
+      git switch main
+      ```
+11. `git merge`
+    - Fusiona otra rama en la rama activa.
+    - Ejemplo:
+      ```bash
+      git merge --no-ff feature/user-authentication
+      ```
+12. `git log`
+    - Muestra el historial de commits.
+    - Ejemplo:
+      ```bash
+      git log --oneline --graph --decorate
+      ```
+13. `git reset`
+    - Deshace cambios en el área de staging o en el working tree.
+    - Ejemplo:
+      ```bash
+      git reset HEAD src/main/java/com/finalproject/App.java
+      ```
+14. `git diff`
+    - Muestra diferencias entre archivos, commits o ramas.
+    - Ejemplo:
+      ```bash
+      git diff origin/dev..dev
+      ```
+15. `git stash`
+    - Guarda cambios temporales sin hacer commit.
+    - Ejemplo:
+      ```bash
+      git stash push -m "WIP fix affinity graph"
+      ```
+16. `git stash pop`
+    - Recupera los cambios guardados en el stash.
+    - Ejemplo:
+      ```bash
+      git stash pop
+      ```
+17. `git pull --rebase`
+    - Actualiza la rama actual rebaseando tus commits encima de los cambios remotos.
+    - Ejemplo:
+      ```bash
+      git pull --rebase origin dev
+      ```
+18. `git push origin --delete <branch>`
+    - Elimina una rama remota cuando ya no se necesita.
+    - Ejemplo:
+      ```bash
+      git push origin --delete feature/user-authentication
+      ```
+
+> Nota: en Git, los nombres de ramas y mensajes deben mantenerse en inglés para que sean claros y consistentes en equipos internacionales.
+
+## GitHub CLI (Pull Request)
+
+### 1. ¿Qué es GitHub CLI?
+
+GitHub CLI (`gh`) es una herramienta de línea de comandos creada por GitHub para gestionar repositorios, issues y pull requests desde la terminal. Su propósito es permitir a los desarrolladores trabajar con GitHub sin cambiar al navegador, integrando flujos de trabajo de Git y GitHub en una experiencia rápida y consistente.
+
+### 2. Comandos básicos
+
+- Crear un pull request desde `dev` hacia `main`:
+
+    ```bash
+    gh pr create --base main --head dev --title "Add user authentication" --body "This PR implements user authentication for the project"
+    ```
+
+- Ver el estado de un pull request:
+
+    ```bash
+    gh pr view <pr-number> --web
+    ```
+
+- Listar pull requests abiertos en el repositorio:
+
+    ```bash
+    gh pr list --state open --base main
+    ```
+
+- Fusionar un pull request:
+
+    ```bash
+    gh pr merge <pr-number> --merge
+    ```
+
+### 3. Ejemplo práctico
+
+Imagina que ya trabajaste en la rama `dev`, hiciste commits y estás listo para abrir un pull request hacia `main`.
+
+1. Crear el pull request desde GitHub CLI:
+
+    ```bash
+    gh pr create --base main --head dev --title "Add user authentication" --body "This PR adds user authentication feature to main"
+    ```
+
+    Ejemplo de salida esperada:
+
+    ```text
+    Created pull request #42
+    View it on GitHub: https://github.com/joscarranzs/FinalProject_DS_III/pull/42
+    ```
+
+2. Ver el estado del pull request:
+
+    ```bash
+    gh pr view 42 --web
+    ```
+
+   - Esto abre la vista del PR `#42` en el navegador y muestra su estado actual.
+   - Si prefieres ver la información en la terminal, usa:
+
+    ```bash
+    gh pr view 42 --json number,title,state,author
+    ```
+
+3. Fusionar el pull request con un merge commit:
+
+    ```bash
+    gh pr merge 42 --merge
+    ```
+
+    Ejemplo de salida esperada:
+
+    ```text
+    Merged pull request #42
+    ```
+
+> Consejo: usa el número real del pull request en lugar de `42`, siguiendo lo que `gh pr list --state open --base main` muestre.
 
